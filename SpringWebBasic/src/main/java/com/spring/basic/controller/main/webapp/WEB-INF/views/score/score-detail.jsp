@@ -29,7 +29,6 @@
             padding: 0;
             font-size: 1.4em;
         }
-
         section.score-main {
             width: 30%;
             margin: 0 auto 150px;
@@ -39,7 +38,6 @@
             box-shadow: 2px 2px 5px orangered;
             transform: translateY(200px);
         }
-
         a {
             display: block;
             width: fit-content;
@@ -49,7 +47,6 @@
             padding: 5px;
             margin-right: 10px;
         }
-
         a.list-btn {
             background: rgb(83, 189, 83);
             color: white;
@@ -86,5 +83,3 @@
 
 </body>
 </html>
-
-

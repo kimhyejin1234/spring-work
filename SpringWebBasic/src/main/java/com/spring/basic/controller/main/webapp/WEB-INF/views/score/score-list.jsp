@@ -119,10 +119,8 @@
     			</li>
     			<c:forEach var = "s" items="${sList}">            
                     <li>
-                    #학번 : ${s.stuNum},이름 : <a href="/basic/score/detail?stuNum=${s.stuNum}">${s.maskingName}</a> ,
+                    #학번 : ${s.stuNum},이름 : <a href="/basic/score/detail?stuNum$={s.stuNum}">${s.maskingName}</a> ,
                      평균:${s.average}, 학점:${s.grade}
-                     
-             
                     <a href="/basic/score/remove?stuNum=${s.stuNum}" class="del-btn">삭제</a>
 	                </li>
                 </c:forEach>

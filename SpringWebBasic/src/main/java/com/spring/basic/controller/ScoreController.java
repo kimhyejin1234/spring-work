@@ -50,7 +50,7 @@ public class ScoreController {
 		service.insertScore(dto);
 		
 		/*
-		 등록 요청이 완료되었다면, 목록을 물러오는 로직을 여기다 작성하는 것이 아닌.
+		 등록 요청이 완료되었다면, 목록을 불러오는 로직을 여기다 작성하는 것이 아닌.
 		 갱신된 목록을 불러오눈 요청이 다시금 들어올 수 있도록 유도를 하자->sendRedirect()
 		 
 		  "redirect:[URL]"  을 작성하면 내가 지정한 URL 로 자동 제 요청이 일어나면서
@@ -66,9 +66,11 @@ public class ScoreController {
 	public String detail(int stuNum , Model model) {
 		System.out.println("/score/detail : 요청 들어옴");
 		retrieve(stuNum,model);
-		return "socre/score-detail";
+		return "score/score-detail";
 	}
 
+	
+	
 	//4. 성적 정보 삭제 요청
 	@GetMapping("/remove")
 	public String remove(int stuNum) {

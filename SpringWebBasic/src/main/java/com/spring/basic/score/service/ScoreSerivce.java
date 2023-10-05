@@ -3,6 +3,8 @@ package com.spring.basic.score.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.spring.basic.score.dto.ScoreListResponseDTO;
@@ -15,13 +17,18 @@ import lombok.RequiredArgsConstructor;
 //컨트롤러와 리파지토리 사이에 배치되어 기타 비즈니스 로직 처리
 //ex)값을 가공,예외처리,dto 로 변환, 트렌잭션 등등...
 @Service //빈 등록
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class ScoreSerivce {
 
 	private final IScoreRepository scoreRepository;
+
+	@Autowired
+	public ScoreSerivce(@Qualifier("jdbc") IScoreRepository scoreRepository) {
+		this.scoreRepository = scoreRepository;
+	}
 	//등록 중간 처리
 	//컨트롤러는 나에게 DTO 를 줬어
-	//하지만,온전한 학생의 정보를 가니는 객체는 -> Score(Entity)
+	//하지만,온전한 학생의 정보를 가지는 객체는 -> Score(Entity)
 	//내가 Entity 을 만들어서 넘겨야 겠다.
 	public void insertScore(ScoreRequestDTO dto) {
 		Score score =  new Score(dto);
@@ -32,7 +39,7 @@ public class ScoreSerivce {
 	/*
 	 컨트롤러는 나에게 데이터베이스를 통해
 	 성적 정보 리스트를 가져오길 원하고 있어.
-	 근데 Rspositiry 는 학생 정보가 모두 포함된 리스트를 주네?
+	 근데 Rspository 는 학생 정보가 모두 포함된 리스트를 주네?
 	 현재 요청에 어울리는 응답 화면에 맞는 DTO 로 변경해서 주자.
 	 */
 	public List<ScoreListResponseDTO> getList() {
@@ -44,6 +51,7 @@ public class ScoreSerivce {
 		}
 		
 		return dtoList;
+		
 	}
 	
 	//학생 점수 개별 조회 

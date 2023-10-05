@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -23,13 +24,16 @@
 
 
     <style>
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+        }
         li {
             list-style: none;
             margin: 0;
             padding: 0;
             font-size: 1.4em;
         }
-
         section.score-main {
             width: 30%;
             margin: 0 auto 150px;
@@ -39,27 +43,16 @@
             box-shadow: 2px 2px 5px orangered;
             transform: translateY(200px);
         }
-
-        a {
+        a.list-btn {
             display: block;
             width: fit-content;
             text-decoration: none;
-            border-radius: 5px;
-            border: 1px solid white;
-            padding: 5px;
-            margin-right: 10px;
-        }
-
-        a.list-btn {
             background: rgb(83, 189, 83);
             color: white;
             box-shadow: 1px 1px 2px rgb(146, 228, 146);
-        }
-        a.mod-btn {
-            background: rgb(228, 248, 49);
-            color: #333;
-            box-shadow: 1px 1px 2px rgb(250, 240, 105);
             border-radius: 5px;
+            border: 1px solid white;
+            padding: 5px;
         }
     </style>
 
@@ -68,23 +61,21 @@
 
     <div class="wrap">
         <section class="score-main">
-            <h1>${s.stuName}님 성적 정보</h1>
-            <ul>
-                <li># 국어: ${s.kor}점</li>
-                <li># 영어: ${s.eng}점</li>
-                <li># 수학: ${s.math}점</li>
-                <li># 총점: ${s.total}점</li>
-                <li># 평균: ${s.average}점</li>
-                <li># 학점: ${s.grade}</li>
-            </ul>
-            <div class="btn-group">
-                <a href="/basic/score/list" class="list-btn">목록</a>
-                <a href="/basic/score/modify?stuNum=${s.stuNum}" class="mod-btn">수정</a>
-            </div>
+            <h1>${s.stuName}님 성적 정보 수정하기</h1>
+            <form action="/basic/score/modify" method="post">
+                <input type="hidden" name="stuNum" value="${s.stuNum}">
+                <ul>
+                    <li># 국어: <input type="text" name="kor" value="${s.kor}"></li>
+                    <li># 영어: <input type="text" name="eng" value="${s.eng}"></li>
+                    <li># 수학: <input type="text" name="math" value="${s.math}"></li>
+                    <div class="btn-group">
+                        <button type="submit">수정완료</button>
+                        <button type="button" onclick="history.back()">이전으로</button>
+                    </div>
+                </ul>
+            </form>
         </section>
     </div>
 
 </body>
 </html>
-
-
