@@ -109,7 +109,7 @@
 
             <hr>
             <ul class="score-list">
-                <li class="list-header"></li>
+                <li class="list-header">
                     <div class="count"> 총 학생 수 : ${sList.size()}명</div>
                     <div class="sort-link-group">
                         <div><a href="#">학번순</a></div>

@@ -121,9 +121,9 @@ public class ScoreJdbcRepository implements IScoreRepository {
 			//5.sql을 다 완성했다면, pstmt 에게 sql을 실행하라는 명령을 내립니다.
 			int rn = pstmt.executeUpdate();//리턴 타입이 int --> sql실행 성공시 1,실패시 0
 			if(rn == 1) {
-				System.out.println("insert 성공!");
+				System.out.println("INSERT 성공!");
 			} else {
-				System.out.println("insert 실패!");
+				System.out.println("INSERT 실패!");
 			}
 			
 		} catch (Exception e) {
@@ -192,35 +192,24 @@ public class ScoreJdbcRepository implements IScoreRepository {
 
 	@Override
 	public void deleteByStuNum(int stuNum) {
-
+		String sql = "DELETE FROM score WHERE score.stu_num = ? ";
 		try {
-			//1.SQL 을 문자열로 준비해 주세요.
-			//변수 또는 객체에 들어있는 값으로 SQL 을 완성해야 한다면, 해당 자리에 ? 를 찍어 주세요.
-			String sql = "DELETE FROM score WHERE score.stu_num = ? ";
-			//2.데이터베이스에 접속을 담당하는 Connection 객체를 메서드를 통해 받아옵니다.
-			//접속 정보를 함께 전달합니다.
 			conn =  DriverManager.getConnection(url, username, password);
-			
-			//3.이제 접속을 할 수 있게 됐으니, sql 을 실행할 수 있는 PreparedStatement 를 받아옵시다.
-			//직접 생성하지 않고, 메서드를 통해 받아옵니다.
+			conn.setAutoCommit(false); //오토커밋 취소
 			pstmt =  conn.prepareStatement(sql);
-			
-			//4.sql 이 아직 완성되지 않았기 때문에, 물음표를 채워서 sql 을 완성 시킵시다.
-			//sql을 pstmt 에게 전달했기 때문에 pstmt 객체를 이용해서 ?를 채웁니다.
 			pstmt.setInt(1,stuNum);
-			
-			//5.sql을 다 완성했다면, pstmt 에게 sql을 실행하라는 명령을 내립니다.
 			int rn = pstmt.executeUpdate();//리턴 타입이 int --> sql실행 성공시 1,실패시 0
 			if(rn == 1) {
 				System.out.println("delete 성공!");
+				conn.commit();
 			} else {
 				System.out.println("delete 실패!");
+				conn.rollback();
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			//6.sql실행까지 마무리가 되었다면, 사용했던 객체들을 해제압니다.
 			try {
 				pstmt.close();
 				conn.close();
@@ -228,8 +217,6 @@ public class ScoreJdbcRepository implements IScoreRepository {
 				e.printStackTrace();
 			}
 		}
-		
-		
 	}
 
 	@Override
