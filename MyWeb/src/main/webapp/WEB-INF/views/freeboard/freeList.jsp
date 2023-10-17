@@ -19,7 +19,7 @@
             <form action="/myweb/freeboard/freeList">
 		    		<div class="search-wrap">
                        <button type="submit" class="btn btn-info search-btn">검색</button>
-                       <input type="text" name="keyword" class="form-control search-input" value"${pc.page.keyword}">
+                       <input type="text" name="keyword" class="form-control search-input" value="${pc.page.keyword}">
                        <select name="condition" class="form-control search-select">
                             <option value="title" ${pc.page.condition == 'title'?'selected':''}>제목</option>
                             <option value="content" ${pc.page.condition == 'content'?'selected':'' }>내용</option>
