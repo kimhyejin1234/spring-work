@@ -48,7 +48,7 @@
             d. DELETE -삭제
             */
 
-            xhr.open('POST','/myweb/rest/object');
+            xhr.open('POST','${pageContext.request.contextPath}/rest/object');
 
 
             //3.서버로 전송할 데이터를 제작합니다.

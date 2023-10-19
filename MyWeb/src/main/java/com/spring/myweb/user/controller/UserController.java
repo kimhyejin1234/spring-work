@@ -1,5 +1,7 @@
 package com.spring.myweb.user.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +59,7 @@ public class UserController {
 	//회원 가입 처리
 	@PostMapping("/join")
 	public String join(UserJoinRequestDTO dto , RedirectAttributes ra) {
+		System.out.println("insert controller :" + dto);
 		service.join(dto);
 		/*
 		 Redirect상황에서 model 객체를 사용하면 데이터가 제대로 전달되지 않습니다.
@@ -79,6 +82,17 @@ public class UserController {
 	//로그인 요청
 	@PostMapping("/userLogin")
 	public void login(String userId , String userPw , Model model) {
-		service.login(userId);
+		System.out.println("나는 UserController 의 login 이다!!! ");
+		model.addAttribute("result",service.login(userId,userPw));
+		
+	}
+	
+	//마이페이지 이동 요청
+	@GetMapping("/userMypage")
+	public void userMypage(HttpSession session, Model model) {
+		//마이페이지는 로그인 한 사람만 이동 가능 -> 세션에 아이디가 있다.!
+		
+		String id = (String) session.getAttribute("login");
+		model.addAttribute("userInfo",service.getInfo(id));
 	}
 }

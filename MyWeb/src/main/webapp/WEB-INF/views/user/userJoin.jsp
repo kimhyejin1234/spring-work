@@ -1,5 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../include/header.jsp" %>
 <section>
     <div class="container">
@@ -8,7 +9,7 @@
                 <div class="titlebox">
                     회원가입
                 </div>
-                <form action="/myweb/user/join" method="post" name="joinForm">
+                <form action="${pageContext.request.contextPath}/user/join" method="post" name="joinForm">
                     <div class="form-group">
                         <!--사용자클래스선언-->
                         <label for="id">아이디</label>
@@ -56,8 +57,8 @@
                     <div class="form-group email-form">
                         <label for="email">이메일</label><br>
                         <div class="input-group">
-                            <input type="text" class="form-control" name = "userEmail"  id="userEmail1" placeholder="이메일">
-                            <select class="form-control" id="userEmail2">
+                            <input type="text" class="form-control" name = "userEmail1"  id="userEmail1" placeholder="이메일">
+                            <select class="form-control" id="userEmail2" name= "userEmail2" >
                                 <option>@naver.com</option>
                                 <option>@daum.net</option>
                                 <option>@gmail.com</option>
@@ -132,7 +133,7 @@
         const xhr = new XMLHttpRequest();
 
         //서버 요청 정보 설정 
-        xhr.open('GET',`/myweb/user/\${userId}`)
+        xhr.open('GET',`${pageContext.request.contextPath}/user/\${userId}`)
         xhr.send();
 
         xhr.onload = function(){
@@ -154,7 +155,7 @@
         
         
         //fetch('url',{요청 관련 정보를 담은 객체(GET 방식에서는 따로 전달 안함.)})
-        fetch('/myweb/user/' + userId)
+        fetch('${pageContext.request.contextPath}/user/' + userId)
         //Promise 객체의 상태가 요청이 성공일 시 데이터 후속 처리 진행.
         .then(res =>{
             //fetch 함수를 통해 비동기 통신이 실행되고,
@@ -182,7 +183,7 @@
         //비동기 요청을 fetch()로 보내고 결과를 확인하기.
         //화살표 함수 내의 코드가 한 줄이고, 그것이 return이라면 괄호와 return 생략 가능.
         console.log('여기까지 다시 들어오니? ');
-        fetch('/myweb/user/id/' + userId)
+        fetch('${pageContext.request.contextPath}/user/id/' + userId)
             .then(res => res.text()) //요청 완료후 응답 정보에서 텍스트 데이터가 담긴 Promise 반환.
             .then(data => { //텍스트 데이터만 담긴 Promise  객체로부터 data 를 전달받음
                 if (data === 'ok') {
@@ -208,7 +209,7 @@
         const email = document.getElementById('userEmail1').value + document.getElementById('userEmail2').value;
         console.log('완성된 email : ', email);
 
-        fetch('/myweb/user/email',{
+        fetch('${pageContext.request.contextPath}/user/email',{
             method: 'post',
             headers: {
                 'Content-Type': 'text/plain'    // json 으로 보낼때 'application/json'
