@@ -14,21 +14,19 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class ReplyRegistDTO {
-
-	private int bno;
-	private String replyText;
-	private String replyId;
+@Builder
+public class ReplyUpdateRequestDTO {
+	private int replyNo;
 	private String replyPw;
+	private String replyText;
 	
-	public Reply toEntity(ReplyRegistDTO dto) {
+	public Reply toEntity(ReplyUpdateRequestDTO dto) {
+		System.out.println("ReplyUpdateRequestDTO :!!" + dto);
 		return Reply.builder()
-			.bno(this.bno)
-			.replyText(this.replyText)
-			.replyWriter(this.replyId)
-			.replyPw(this.replyPw)
-			.build();
-			
+		.replyNo(this.replyNo)
+		.replyPw(this.replyPw)
+		.replyText(this.replyText)
+		.build();
+		
 	}
 }

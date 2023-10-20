@@ -3,13 +3,13 @@ package com.spring.myweb.reply.service;
 import java.util.List;
 
 import com.spring.myweb.reply.dto.ReplyListResponseDTO;
-import com.spring.myweb.reply.dto.ReplyRegistDTO;
-
+import com.spring.myweb.reply.dto.ReplyRequestDTO;
+import com.spring.myweb.reply.dto.ReplyUpdateRequestDTO;
 import com.spring.myweb.reply.entity.Reply;
 
 public interface IReplyService {
 
-	void replyRegist(ReplyRegistDTO dto); //댓글 등록
+	void replyRegist(ReplyRequestDTO dto); //댓글 등록
 	
 	List<ReplyListResponseDTO> getList(int bno , int pageNum);//목록 요청
 	
@@ -17,8 +17,10 @@ public interface IReplyService {
 	
 	String pwCheck(int rno); //비밀번호 확인
 	
-	void update(Reply reply); //댓글 수정
+	String update(ReplyUpdateRequestDTO dtp); //댓글 수정
 	
-	void delete(int rno); //댓글 삭제
+	String delete(int rno , String replyPw); //댓글 삭제
+
+
 
 }

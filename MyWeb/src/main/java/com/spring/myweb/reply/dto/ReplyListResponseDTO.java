@@ -19,15 +19,16 @@ public class ReplyListResponseDTO {
 	private String date;
 	
 	public ReplyListResponseDTO(Reply reply) {
+		System.out.println(" ReplyListResponseDTO : " + reply );
 		this.replyNo = reply.getReplyNo();
 		this.replyWriter = reply.getReplyWriter();
 		this.replyText = reply.getReplyText();
 		if(reply.getUpdateDate() == null) {
 			this.date = makePrettierDateString(reply.getReplyDate());
 		} else {
-			this.date = makePrettierDateString(reply.getUpdateDate())+"(수정됨)";
+			this.date = makePrettierDateString(reply.getUpdateDate()) + " (수정됨)";
 		}
-		
+		System.out.println("this.date : " + this.date );
 	}
 
 	
