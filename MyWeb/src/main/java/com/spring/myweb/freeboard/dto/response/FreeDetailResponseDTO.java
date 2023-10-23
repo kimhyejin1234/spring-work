@@ -1,7 +1,6 @@
 package com.spring.myweb.freeboard.dto.response;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 import com.spring.myweb.freeboard.entity.FreeBoard;
 
