@@ -11,27 +11,25 @@ import lombok.Setter;
 import lombok.ToString;
 
 /*
- 
-create table snsboard(
-    bno NUMBER PRIMARY KEY,
-    writer VARCHAR2(50) NOT NULL,
-    upload_path VARCHAR2(100),
-    file_loca VARCHAR2(100),
-    file_name VARCHAR2(100),
-    file_read_name VARCHAR2(100),
-    content VARCHAR2(4000),
-    reg_date DATE DEFAULT sysdate
+-- SNS 게시판
+CREATE TABLE snsboard(
+   bno NUMBER PRIMARY KEY,
+   writer VARCHAR2(50) NOT NULL,
+   upload_path VARCHAR2(100),
+   file_loca VARCHAR2(100),
+   file_name VARCHAR2(100),
+   file_real_name VARCHAR2(100),
+   content VARCHAR2(4000),
+   reg_date DATE DEFAULT sysdate
 );
 
-create SEQUENCE snsboard_seq
-START WITH 1
-INCREMENT by 1
-maxvalue 100000
-NOCYCLE
-NOCACHE
-
-
- */
+CREATE SEQUENCE snsboard_seq
+   START WITH 1
+   INCREMENT BY 1
+   MAXVALUE 100000
+   NOCYCLE
+   NOCACHE;
+*/
 
 @Getter @Setter @ToString
 @EqualsAndHashCode
