@@ -31,7 +31,7 @@ public class UserLoginHandler implements HandlerInterceptor {
 		if(request.getMethod().equals("POST")) {//요청방식이 POST 이면->로그인 요청이었다면,
 			ModelMap map =  modelAndView.getModelMap();//모델 객체 꺼내기
 			String result  = (String) map.get("result"); //모델 내에 result 이름의 데이터 꺼내기
-			
+			System.out.println("모델 객체가 궁금해 !!! modelAndView " + modelAndView );
 			if(result != null) {
 				System.out.println("로그인 성공 로직이 동작합니다.!");
 				//로그인 성공
