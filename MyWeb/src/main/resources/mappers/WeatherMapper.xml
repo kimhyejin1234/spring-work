@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ CREATE table test_location(
+    area1 VARCHAR2(50),
+    area2 VARCHAR2(50),
+    nx NUMBER,
+    ny NUMBER,
+    latitude NUMBER(20,15),
+    longitude NUMBER(20,15)
+);
+ --> 
+    
+ <mapper namespace="com.spring.myweb.rest.IWeatherMaooer">
+ 	
+ 	<select id="getCoord" resultType="map">
+ 		SELECT * FROM 
+	    (
+	    SELECT ROWNUM as rn , nx,ny
+	    FROM test_location
+	    WHERE area1 = #{area1}
+	    AND area2 LIKE '%' || #{area2} || '%'
+	    )
+		WHERE ROWNUM = 1    	
+ 		
+ 	</select>
+ 
+ 
+ 
+ </mapper>

@@ -21,6 +21,8 @@ public class SnsBoardResponseDTO {
 	private String fileName;
 	private String content;
 	private String regDate;
+	private int likeCnt;
+	
 
 	public SnsBoardResponseDTO(SnsBoard board) {
 		this.bno = board.getBno();
@@ -30,7 +32,7 @@ public class SnsBoardResponseDTO {
 		this.fileName = board.getFileName();
 		this.content = board.getContent();
 		this.regDate = makePrettierDateString(board.getRegDate());
-		
+		this.likeCnt = board.getLikeCnt();
 		
 	} 
 	

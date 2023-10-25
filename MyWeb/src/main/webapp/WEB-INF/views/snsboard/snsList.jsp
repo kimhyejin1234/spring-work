@@ -341,7 +341,7 @@
 					document.getElementById('file').value = ''; //file input 비우기
 					document.getElementById('content').value = ''; //글 영역 비우기
 					document.querySelector('.fileDiv').style.display = 'none';//미리보기 감추기
-					getList(1,true);//글 목록 함수 호출
+					getLikeList(1,true);;//글 목록 함수 호출
                 });
 
 		} // 등록을 담당하는 함수 끝
@@ -354,10 +354,44 @@
 
 		const $contentDiv = document.getElementById('contentDiv');
 
-		getList(1,true);
+		getLikeList(1,true);
+
+		//지금 게시판에 들어온 회원의 좋아요 게시물 목록을 받아오는 함수.
+		function getLikeList(page,reset){
+
+			const userId = '${login}';
+			console.log('userId : ' , userId);
+
+			/*
+			틀정 데이터를 브라우저가 제공하는 공간에 저장할 수 있습니다.
+			localStorage,sessionStorage -> 수명에 차이점이 있습니다.
+			
+			localStorage : 브라우저가 종료되더라도 데이터는 유지됩니다.
+						   브라우저 탭이 여러 개 존재하더라도 데이터가 공유됩니다.
+						   
+			sessionStorage: 브라우저가 종료되면 데이터는 소멸됩니다.
+						    브라우저 탭 별로 데이터가 저장되기 때문에  공유되지 않습니다.
+			*/
+			if(userId !== '') {
+				if(sessionStorage.getItem('likeList')){
+					console.log('sessionStorage에 list 존재함!!');
+					getList(page,reset,sessionStorage.getItem('likeList'));
+					return;
+				}
+				fetch('${pageContext.request.contextPath}/snsboard/likeList/' + userId)
+					.then(res => res.json())
+					.then(list => {
+						console.log('좋아요 글 목록 받아옴!!: ' , list);
+						sessionStorage.setItem('likeList',list);
+						getList(page,reset,list);
+					});
+			} else {
+				getList(page,reset,null);
+			}
+		}
 
 
-		function getList(page , reset){
+		function getList(page , reset, likeList){
 			str = '';
 			isFinish = false;
 			console.log('page : ' , page);
@@ -406,10 +440,21 @@
                         </div>
                         <div class="like-inner">
                             <!--좋아요-->
-                            <img src="${pageContext.request.contextPath}/img/icon.jpg"> <span>522</span>
+                            <img src="${pageContext.request.contextPath}/img/icon.jpg"> <span>` + board.likeCnt + `</span>
                         </div>
-                        <div class="link-inner">
-                            <a id = "likeBtn" href="` + board.bno + `"><img src="${pageContext.request.contextPath}/img/like1.png" width="20px" height="20px"/>좋아요</a>
+                        <div class="link-inner">`;
+							console.log('좋아요가 이상해 : board.bno : likeList ' ,board.bno , likeList );
+							if(likeList){
+								if(likeList.includes(board.bno)){
+									str += `<a id = "likeBtn" href="` + board.bno + `"><img src="${pageContext.request.contextPath}/img/like2.png" width="20px" height="20px"/>좋아요</a>`;
+								} else {
+									str += `<a id = "likeBtn" href="` + board.bno + `"><img src="${pageContext.request.contextPath}/img/like1.png" width="20px" height="20px"/>좋아요</a>`;
+								}
+							} else {
+								str += `<a id = "likeBtn" href="` + board.bno + `"><img src="${pageContext.request.contextPath}/img/like1.png" width="20px" height="20px"/>좋아요</a>`;
+							}
+							str += `
+                    
                             <a data-bno="` + board.bno + `" id="comment" href="` + board.bno + `"><i class="glyphicon glyphicon-comment"></i>댓글달기</a>
                             <a id="delBtn" href="` + board.bno + `"><i class="glyphicon glyphicon-remove"></i>삭제하기</a>
                         </div>`;
@@ -473,7 +518,7 @@
 						alert('관리자에게 문의하세요');
 					} else {
 						alert('게시물이삭제 되었습니다.');
-						getList(1,true);//삭제가 반영된 새로운 글 목록 보여주기
+						getLikeList(1,true);;//삭제가 반영된 새로운 글 목록 보여주기
 						
 					}
 				})
@@ -563,7 +608,7 @@
 			if(isFinish){
 				if(scrollPosition + windowHeight >= height * 0.9){
 				console.log('next page call !!');
-				getList(++page,false);
+				getLikeList(++page,false);
 				}
 			}
 		},1000);
@@ -608,6 +653,7 @@
 					const $cnt =  e.target.parentNode.previousElementSibling.children[1];
 					$cnt.textContent = Number($cnt.textContent) - 1;
 				}
+
 			})
 		})
 
